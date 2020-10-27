@@ -2,6 +2,7 @@ package phablo.lisboa.desafioapi.model;
 
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,10 +11,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+
+import org.hibernate.validator.constraints.Length;
 
 @Entity
 public class Client {
@@ -22,33 +23,36 @@ public class Client {
 	private int id;
 
 	@NotNull
-	@Min(3)
-	@Max(100)
+	@Length(max = 100, min = 3)
 	@Pattern(regexp = "^[_A-z0-9]*((-|\\s)*[_A-z0-9])*$")
-	private String nome;
+	private String name;
 
 	@NotNull
 	@Pattern(regexp = "\\d{11}")
 	private String cpf;
 
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "address_id")
 	private Address address;
 
-	@OneToMany(mappedBy = "client")
+	@OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
 	@ElementCollection
 	private Set<Phone> phones;
 
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "user_id")
 	private User user;
+
+	@OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
+	@ElementCollection
+	private Set<Email> emails;
 
 	public Client() {
 	}
 
-	public Client(String nome, String cpf) {
+	public Client(String name, String cpf) {
 		super();
-		this.nome = nome;
+		this.name = name;
 		this.cpf = cpf;
 	}
 
@@ -60,12 +64,12 @@ public class Client {
 		this.id = id;
 	}
 
-	public String getNome() {
-		return nome;
+	public String getName() {
+		return name;
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String getCpf() {
@@ -74,6 +78,38 @@ public class Client {
 
 	public void setCpf(String cpf) {
 		this.cpf = cpf;
+	}
+
+	public Address getAddress() {
+		return address;
+	}
+
+	public void setAddress(Address address) {
+		this.address = address;
+	}
+
+	public Set<Phone> getPhones() {
+		return phones;
+	}
+
+	public void setPhones(Set<Phone> phones) {
+		this.phones = phones;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public Set<Email> getEmails() {
+		return emails;
+	}
+
+	public void setEmails(Set<Email> emails) {
+		this.emails = emails;
 	}
 
 }

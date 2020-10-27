@@ -19,8 +19,17 @@ public class Email {
 	private String email;
 
 	@ManyToOne
-	@JoinColumn(name = "user_id")
-	private User user;
+	@JoinColumn(name = "client_id")
+	private Client client;
+
+	public Email() {
+	}
+
+	public Email(String email, Client client) {
+		super();
+		this.email = email;
+		this.client = client;
+	}
 
 	public String getEmail() {
 		return email;

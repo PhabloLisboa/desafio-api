@@ -22,6 +22,9 @@ public class PhoneType {
 	@ElementCollection
 	private Set<Phone> phones;
 
+	public PhoneType() {
+	}
+
 	public PhoneType(String description) {
 		super();
 		this.description = description;

@@ -24,6 +24,21 @@ public class Phone {
 	@JoinColumn(name = "type_phone_id")
 	private PhoneType type;
 
+	public Phone() {
+	}
+
+	public Phone(@NotNull String number, Client client, PhoneType type) {
+		super();
+		this.number = number;
+		this.client = client;
+		this.type = type;
+	}
+
+	public Phone(String number) {
+		super();
+		this.number = number;
+	}
+
 	public int getId() {
 		return id;
 	}
@@ -37,19 +52,6 @@ public class Phone {
 	}
 
 	public void setNumber(String number) {
-		this.number = number;
-	}
-
-//	public PhoneType getType() {
-//		return type;
-//	}
-//
-//	public void setType(PhoneType type) {
-//		this.type = type;
-//	}
-
-	public Phone(String number) {
-		super();
 		this.number = number;
 	}
 

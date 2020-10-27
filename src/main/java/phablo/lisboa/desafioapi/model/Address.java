@@ -45,6 +45,11 @@ public class Address {
 		UF = uF;
 	}
 
+	public Address(String cep, String logradouro, String bairro, String cidade, String uF, String complemento) {
+		this(cep, logradouro, bairro, cidade, uF);
+		this.setComplemento(complemento);
+	}
+
 	public int getId() {
 		return id;
 	}
@@ -91,6 +96,14 @@ public class Address {
 
 	public void setUF(String uF) {
 		UF = uF;
+	}
+
+	public String getComplemento() {
+		return complemento;
+	}
+
+	public void setComplemento(String complemento) {
+		this.complemento = complemento;
 	}
 
 }
