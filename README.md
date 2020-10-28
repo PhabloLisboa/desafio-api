@@ -2,7 +2,7 @@
 
 Para vizualizar o projeto:
 
-### `./mvnw spring-boot:run     
+### ./mvnw spring-boot:run     
 
 
 Ficará disponível no endereço: [http://localhost:8080](http://localhost:8080).
