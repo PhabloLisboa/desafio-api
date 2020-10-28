@@ -9,4 +9,4 @@ Ficará disponível no endereço: [http://localhost:8080](http://localhost:8080)
 
 ## Configurações Disponíveis
 
-DATABASE: acesso ào banco -> disponível em /src/main/java/resources --------------- Necessário configurar de acordo para o devido funcionamento
+DATABASE: acesso ào banco -> disponível em /src/main/java/resources/application.properties  --------------- Necessário configurar de acordo, para o devido funcionamento
