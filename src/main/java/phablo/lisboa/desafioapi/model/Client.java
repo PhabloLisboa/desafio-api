@@ -3,6 +3,7 @@ package phablo.lisboa.desafioapi.model;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -24,11 +25,12 @@ public class Client {
 
 	@NotNull
 	@Length(max = 100, min = 3)
-	@Pattern(regexp = "^[_A-z0-9]*((-|\\s)*[_A-z0-9])*$")
+	@Pattern(regexp = "^[_A-z0-9áéíóúçãõ]*((-|\\\\s)*[_A-z0-9])*$")
 	private String name;
 
 	@NotNull
 	@Pattern(regexp = "\\d{11}")
+	@Column(unique = true)
 	private String cpf;
 
 	@OneToOne(cascade = CascadeType.ALL)

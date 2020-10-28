@@ -2,6 +2,7 @@ package phablo.lisboa.desafioapi.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,6 +18,7 @@ import phablo.lisboa.desafioapi.services.ClientService;
 
 @RestController
 @RequestMapping("/clients")
+@CrossOrigin("*")
 public class ClientController {
 
 	@Autowired
@@ -27,6 +29,7 @@ public class ClientController {
 		return service.findAll();
 	}
 
+	@SuppressWarnings("rawtypes")
 	@PostMapping
 	public ResponseEntity create(@RequestBody ClientRequest request) {
 		try {
@@ -37,6 +40,7 @@ public class ClientController {
 		}
 	}
 
+	@SuppressWarnings("rawtypes")
 	@PutMapping
 	public ResponseEntity update(@RequestParam String id, @RequestBody ClientRequest request) {
 		try {
@@ -47,6 +51,7 @@ public class ClientController {
 		}
 	}
 
+	@SuppressWarnings("rawtypes")
 	@DeleteMapping
 	public ResponseEntity delete(@RequestParam String id) {
 		System.out.println(id);

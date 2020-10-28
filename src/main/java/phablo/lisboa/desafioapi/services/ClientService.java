@@ -16,6 +16,7 @@ import phablo.lisboa.desafioapi.repository.ClientRepository;
 import phablo.lisboa.desafioapi.repository.EmailRepository;
 import phablo.lisboa.desafioapi.repository.PhoneRepository;
 import phablo.lisboa.desafioapi.repository.PhoneTypeRepository;
+import phablo.lisboa.desafioapi.repository.RoleRepository;
 import phablo.lisboa.desafioapi.repository.UserRepository;
 import phablo.lisboa.desafioapi.requests.ClientRequest;
 
@@ -40,14 +41,25 @@ public class ClientService {
 	@Autowired
 	private PhoneTypeRepository phoneTypeRepository;
 
+	@Autowired
+	private RoleRepository roleRepository;
+
 	public Iterable<Client> findAll() {
 		return clientRepository.findAll();
 	}
 
+	public Client findOne(Integer id) {
+		return clientRepository.findById(id).get();
+	}
+
 	public Client create(ClientRequest request) {
 		User user = new User(request.getUsername(), request.getPassword());
-		Client client = new Client(request.getName(), request.getCpf());
+		Client client = new Client(request.getName(), request.getCpf().replace(".", "").replace("-", ""));
 		Address address = request.getAddress();
+
+		user.setRole(roleRepository.findById(2).get());
+
+		address.setCep(address.getCep().replace(".", "").replace("-", ""));
 
 		userRepository.save(user);
 		addressRepository.save(address);
@@ -60,7 +72,7 @@ public class ClientService {
 		request.getEmails().stream().forEach(email -> emailRepository.save(new Email(email, client)));
 
 		for (HashMap<String, String> phone : request.getPhones()) {
-			Object number = phone.get("number");
+			Object number = phone.get("number").replace("(", "").replace("-", "").replace(")", "").replace(" ", "");
 			PhoneType type = phoneTypeRepository.findById(Integer.valueOf((String) phone.get("type"))).get();
 			PhoneRepository.save(new Phone((String) number, client, type));
 		}
@@ -69,6 +81,23 @@ public class ClientService {
 	}
 
 	public Client update(Integer id, ClientRequest request) {
+		Client client = clientRepository.findById(id).get();
+		User user = userRepository.findById(client.getUser().getId()).get();
+		Address address = addressRepository.findById(client.getAddress().getId()).get();
+
+		user.setUsername(request.getUsername());
+		address.update(request.getAddress().getCep().replace(".", "").replace("-", ""),
+				request.getAddress().getLogradouro(), request.getAddress().getBairro(),
+				request.getAddress().getCidade(), request.getAddress().getUF(), request.getAddress().getComplemento());
+
+		userRepository.save(user);
+		addressRepository.save(address);
+
+		client.setName(request.getName());
+		client.setCpf(request.getCpf().replace(".", "").replace("-", ""));
+		clientRepository.save(client);
+
+		return client;
 
 	}
 

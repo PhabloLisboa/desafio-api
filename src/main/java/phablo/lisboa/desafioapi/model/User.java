@@ -1,9 +1,12 @@
 package phablo.lisboa.desafioapi.model;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
@@ -18,6 +21,7 @@ public class User {
 	private int id;
 
 	@NotNull
+	@Column(unique = true)
 	private String username;
 
 	@NotNull
@@ -27,6 +31,10 @@ public class User {
 	@OneToOne(mappedBy = "user")
 	private Client client;
 
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "role_id")
+	private Role role;
+
 	public User() {
 	}
 
@@ -34,6 +42,14 @@ public class User {
 		super();
 		this.username = username;
 		this.password = new BCryptPasswordEncoder().encode(password);
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	public int getId() {
@@ -48,8 +64,16 @@ public class User {
 		return password;
 	}
 
+	public Role getRole() {
+		return role;
+	}
+
+	public void setRole(Role role) {
+		this.role = role;
+	}
+
 	public void setPassword(String password) {
-		this.password = password;
+		this.password = new BCryptPasswordEncoder().encode(password);
 	}
 
 }

@@ -1,5 +1,6 @@
 package phablo.lisboa.desafioapi.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -16,6 +17,7 @@ public class Email {
 
 	@NotNull
 	@javax.validation.constraints.Email
+	@Column(unique = true)
 	private String email;
 
 	@ManyToOne
@@ -29,6 +31,10 @@ public class Email {
 		super();
 		this.email = email;
 		this.client = client;
+	}
+
+	public int getId() {
+		return id;
 	}
 
 	public String getEmail() {

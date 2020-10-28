@@ -16,6 +16,9 @@ public class ClientRequest {
 	private Address address;
 	private List<HashMap<String, String>> phones = new ArrayList<HashMap<String, String>>();
 
+	public ClientRequest() {
+	}
+
 	public ClientRequest(String name, String username, String password, String cpf, List<String> emails,
 			Address address, List<HashMap<String, String>> phones) {
 		super();
@@ -26,6 +29,15 @@ public class ClientRequest {
 		this.emails = emails;
 		this.address = address;
 		this.phones = phones;
+	}
+
+	public ClientRequest(String name, String username, String cpf, Address address) {
+		super();
+		this.name = name;
+		this.username = username;
+		this.cpf = cpf;
+		this.address = address;
+
 	}
 
 	public String getName() {

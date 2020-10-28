@@ -106,4 +106,13 @@ public class Address {
 		this.complemento = complemento;
 	}
 
+	public void update(String cep, String logradouro, String bairro, String cidade, String uF, String complemento) {
+		this.cep = cep;
+		this.logradouro = logradouro;
+		this.bairro = bairro;
+		this.cidade = cidade;
+		UF = uF;
+		this.setComplemento(complemento);
+	}
+
 }
